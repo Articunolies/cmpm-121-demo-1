@@ -25,4 +25,3 @@ button.addEventListener("click", () => {
   crabCount++;
   counter.innerHTML = `${crabCount} crabs`;
 });
-
