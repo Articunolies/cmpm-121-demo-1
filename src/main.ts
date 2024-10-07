@@ -13,3 +13,16 @@ app.append(header);
 const button = document.createElement("button");
 button.innerHTML = "🦀";
 app.append(button);
+
+//Add a <div> element to the page that will report on the value of a counter with a message like “12 cookies”
+const counter = document.createElement("div");
+counter.innerHTML = "0 ";
+app.append(counter);
+
+let crabCount = 0;
+
+button.addEventListener("click", () => {
+  crabCount++;
+  counter.innerHTML = `${crabCount} crabs`;
+});
+
