@@ -25,3 +25,9 @@ button.addEventListener("click", () => {
   crabCount++;
   counter.innerHTML = `${crabCount} crabs`;
 });
+
+// Make it so that the counter increments by 1 unit each second in addition to the increments coming from player clicks.
+setInterval(() => {
+  crabCount++;
+  counter.innerHTML = `${crabCount} crabs`;
+}, 1000);
