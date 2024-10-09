@@ -37,18 +37,36 @@ setInterval(() => {
 
 let lastTime = performance.now();
 let crabCountFractional = 0;
+let growthRate = 0;
+
+// Create the purchase button
+const purchaseButton = document.createElement("button");
+purchaseButton.innerHTML = "Purchase Upgrade (10 crabs)";
+purchaseButton.disabled = true;
+document.body.appendChild(purchaseButton);
+
+purchaseButton.addEventListener("click", () => {
+  if (crabCount >= 10) {
+    crabCount -= 10;
+    growthRate += 1;
+    counter.innerHTML = `${crabCount} crabs`;
+  }
+});
 
 function updateCounter() {
   const now = performance.now();
   const dt = now - lastTime;
   lastTime = now;
 
-  crabCountFractional += dt / 1000;
+  crabCountFractional += (growthRate * dt) / 1000;
   if (crabCountFractional >= 1) {
     crabCount += Math.floor(crabCountFractional);
     crabCountFractional %= 1;
     counter.innerHTML = `${crabCount} crabs`;
   }
+
+  // Enable or disable the purchase button based on the crab count
+  purchaseButton.disabled = crabCount < 10;
 
   requestAnimationFrame(updateCounter);
 }
