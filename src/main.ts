@@ -31,3 +31,26 @@ setInterval(() => {
   crabCount++;
   counter.innerHTML = `${crabCount} crabs`;
 }, 1000);
+
+// Make it so that the counter grows by a fractional amount per animation frame with a cumulative increase of 1 unit per second. (If we were animating about 60 frames per second, the counter should go up by 1/60 units per frame.)
+// Implement this using requestAnimationFrame and remove your setTimeout implementation.
+
+let lastTime = performance.now();
+let crabCountFractional = 0;
+
+function updateCounter() {
+  const now = performance.now();
+  const dt = now - lastTime;
+  lastTime = now;
+
+  crabCountFractional += dt / 1000;
+  if (crabCountFractional >= 1) {
+    crabCount += Math.floor(crabCountFractional);
+    crabCountFractional %= 1;
+    counter.innerHTML = `${crabCount} crabs`;
+  }
+
+  requestAnimationFrame(updateCounter);
+}
+
+requestAnimationFrame(updateCounter);
