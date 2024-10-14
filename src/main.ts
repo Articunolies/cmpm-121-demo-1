@@ -8,11 +8,36 @@ interface Item {
 }
 
 const availableItems: Item[] = [
-  { name: "Worm", price: 10, productionRate: 0.1, description: "A small worm that helps find crabs." },
-  { name: "Shrimp", price: 100, productionRate: 2, description: "A shrimp that attracts more crabs." },
-  { name: "Fish", price: 1000, productionRate: 50, description: "A fish that brings in a lot of crabs." },
-  { name: "Crab Trap", price: 5000, productionRate: 200, description: "A trap that catches crabs automatically." },
-  { name: "Crab Boat", price: 20000, productionRate: 1000, description: "A boat that hauls in crabs by the hundreds." },
+  {
+    name: "Worm",
+    price: 10,
+    productionRate: 0.1,
+    description: "A small worm that helps find crabs.",
+  },
+  {
+    name: "Shrimp",
+    price: 100,
+    productionRate: 2,
+    description: "A shrimp that attracts more crabs.",
+  },
+  {
+    name: "Fish",
+    price: 1000,
+    productionRate: 50,
+    description: "A fish that brings in a lot of crabs.",
+  },
+  {
+    name: "Crab Trap",
+    price: 5000,
+    productionRate: 200,
+    description: "A trap that catches crabs automatically.",
+  },
+  {
+    name: "Crab Boat",
+    price: 20000,
+    productionRate: 1000,
+    description: "A boat that hauls in crabs by the hundreds.",
+  },
 ];
 
 const app: HTMLDivElement = document.querySelector("#app")!;
