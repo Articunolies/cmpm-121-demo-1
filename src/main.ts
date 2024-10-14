@@ -1,5 +1,17 @@
 import "./style.css";
 
+interface Item {
+  name: string;
+  price: number;
+  productionRate: number;
+}
+
+const availableItems: Item[] = [
+  { name: "Worm", price: 10, productionRate: 0.1 },
+  { name: "Shrimp", price: 100, productionRate: 2 },
+  { name: "Fish", price: 1000, productionRate: 50 },
+];
+
 const app: HTMLDivElement = document.querySelector("#app")!;
 
 const gameName = "My fantastical game";
@@ -18,17 +30,9 @@ button.style.height = "150px"; // Triple the size (assuming original size was 50
 button.style.fontSize = "48px"; // Adjust font size to fit the new button size
 app.append(button);
 
-// const button = document.createElement("img");
-// button.src = "C:/Users/artic/OneDrive/Desktop/CMPM 121/cmpm-121-demo-1/img/istockphoto-1441977682-612x612.jpg"; // Replace with the path to your image
-// button.alt = "Click me";
-// button.style.cursor = "pointer"; // Make the cursor a pointer when hovering over the image
-// button.style.width = "100px"; // Set the width of the image
-// button.style.height = "100px"; // Set the height of the image
-// app.append(button);
-
-//Add a <div> element to the page that will report on the value of a counter with a message like “12 cookies”
+// Add a <div> element to the page that will report on the value of a counter with a message like “12 cookies”
 const counter = document.createElement("div");
-counter.innerHTML = "0 ";
+counter.innerHTML = "0 crabs";
 app.append(counter);
 
 let crabCount = 0;
@@ -38,55 +42,45 @@ button.addEventListener("click", () => {
   counter.innerHTML = `${crabCount} crabs`;
 });
 
-// Make it so that the counter increments by 1 unit each second in addition to the increments coming from player clicks.
-setInterval(() => {
-  crabCount++;
-  counter.innerHTML = `${crabCount} crabs`;
-}, 1000);
-
-// Make it so that the counter grows by a fractional amount per animation frame with a cumulative increase of 1 unit per second. (If we were animating about 60 frames per second, the counter should go up by 1/60 units per frame.)
-// Implement this using requestAnimationFrame and remove your setTimeout implementation.
+// Remove the setInterval implementation
+// setInterval(() => {
+//   crabCount++;
+//   counter.innerHTML = `${crabCount} crabs`;
+// }, 1000);
 
 let lastTime = performance.now();
 let crabCountFractional = 0;
 let growthRate = 0;
 
-const upgrades = [
-  { name: "Worm", cost: 10, rate: 0.1, count: 0 },
-  { name: "Shrimp", cost: 100, rate: 2.0, count: 0 },
-  { name: "Fish", cost: 1000, rate: 50.0, count: 0 },
-];
-
 const upgradeButtons: HTMLButtonElement[] = [];
 const upgradeStatus: HTMLDivElement[] = [];
 
-// Create the purchase button
-upgrades.forEach((upgrade) => {
+availableItems.forEach((item) => {
   const button = document.createElement("button");
-  button.innerHTML = `Purchase ${upgrade.name} (${upgrade.cost.toFixed(2)} crabs)`;
+  button.innerHTML = `Purchase ${item.name} (${item.price.toFixed(2)} crabs)`;
   button.disabled = true;
   app.append(button);
   upgradeButtons.push(button);
 
   const status = document.createElement("div");
-  status.innerHTML = `${upgrade.name}: 0 purchased`;
+  status.innerHTML = `${item.name}: 0 purchased`;
   app.append(status);
   upgradeStatus.push(status);
 
   button.addEventListener("click", () => {
-    if (crabCount >= upgrade.cost) {
-      crabCount -= upgrade.cost;
-      growthRate += upgrade.rate;
-      upgrade.count++;
-      upgrade.cost *= 1.15;
+    if (crabCount >= item.price) {
+      crabCount -= item.price;
+      growthRate += item.productionRate;
+      item.price *= 1.15;
       counter.innerHTML = `${crabCount} crabs`;
-      status.innerHTML = `${upgrade.name}: ${upgrade.count} purchased`;
-      button.innerHTML = `Purchase ${upgrade.name} (${upgrade.cost.toFixed(2)} crabs)`;
+      status.innerHTML = `${item.name}: ${item.price.toFixed(2)} purchased`;
+      button.innerHTML = `Purchase ${item.name} (${item.price.toFixed(2)} crabs)`;
       updateGrowthRateDisplay();
     }
   });
 });
 
+// Create the growth rate display
 const growthRateDisplay = document.createElement("div");
 growthRateDisplay.innerHTML = `Growth rate: 0 crabs/sec`;
 app.append(growthRateDisplay);
@@ -107,10 +101,11 @@ function updateCounter() {
     counter.innerHTML = `${crabCount} crabs`;
   }
 
-  // Enable or disable the purchase button based on the crab count
-  upgrades.forEach((upgrade, index) => {
-    upgradeButtons[index].disabled = crabCount < upgrade.cost;
+  // Enable or disable the purchase buttons based on the crab count
+  availableItems.forEach((item, index) => {
+    upgradeButtons[index].disabled = crabCount < item.price;
   });
+
   requestAnimationFrame(updateCounter);
 }
 
