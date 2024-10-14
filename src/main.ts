@@ -4,12 +4,15 @@ interface Item {
   name: string;
   price: number;
   productionRate: number;
+  description: string;
 }
 
 const availableItems: Item[] = [
-  { name: "Worm", price: 10, productionRate: 0.1 },
-  { name: "Shrimp", price: 100, productionRate: 2 },
-  { name: "Fish", price: 1000, productionRate: 50 },
+  { name: "Worm", price: 10, productionRate: 0.1, description: "A small worm that helps find crabs." },
+  { name: "Shrimp", price: 100, productionRate: 2, description: "A shrimp that attracts more crabs." },
+  { name: "Fish", price: 1000, productionRate: 50, description: "A fish that brings in a lot of crabs." },
+  { name: "Crab Trap", price: 5000, productionRate: 200, description: "A trap that catches crabs automatically." },
+  { name: "Crab Boat", price: 20000, productionRate: 1000, description: "A boat that hauls in crabs by the hundreds." },
 ];
 
 const app: HTMLDivElement = document.querySelector("#app")!;
@@ -42,15 +45,9 @@ button.addEventListener("click", () => {
   counter.innerHTML = `${crabCount} crabs`;
 });
 
-// Remove the setInterval implementation
-// setInterval(() => {
-//   crabCount++;
-//   counter.innerHTML = `${crabCount} crabs`;
-// }, 1000);
-
 let lastTime = performance.now();
 let crabCountFractional = 0;
-let growthRate = 0;
+let growthRate = 1;
 
 const upgradeButtons: HTMLButtonElement[] = [];
 const upgradeStatus: HTMLDivElement[] = [];
@@ -59,6 +56,7 @@ availableItems.forEach((item) => {
   const button = document.createElement("button");
   button.innerHTML = `Purchase ${item.name} (${item.price.toFixed(2)} crabs)`;
   button.disabled = true;
+  button.title = item.description; // Add description as a tooltip
   app.append(button);
   upgradeButtons.push(button);
 
