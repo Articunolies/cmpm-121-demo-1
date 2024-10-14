@@ -51,7 +51,7 @@ const upgradeStatus: HTMLDivElement[] = [];
 // Create the purchase button
 upgrades.forEach((upgrade) => {
   const button = document.createElement("button");
-  button.innerHTML = `Purchase ${upgrade.name} (${upgrade.cost} crabs)`;
+  button.innerHTML = `Purchase ${upgrade.name} (${upgrade.cost.toFixed(2)} crabs)`;
   button.disabled = true;
   app.append(button);
   upgradeButtons.push(button);
@@ -66,8 +66,10 @@ upgrades.forEach((upgrade) => {
       crabCount -= upgrade.cost;
       growthRate += upgrade.rate;
       upgrade.count++;
+      upgrade.cost *= 1.15;
       counter.innerHTML = `${crabCount} crabs`;
       status.innerHTML = `${upgrade.name}: ${upgrade.count} purchased`;
+      button.innerHTML = `Purchase ${upgrade.name} (${upgrade.cost.toFixed(2)} crabs)`;
       updateGrowthRateDisplay();
     }
   });
