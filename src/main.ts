@@ -39,19 +39,47 @@ let lastTime = performance.now();
 let crabCountFractional = 0;
 let growthRate = 0;
 
-// Create the purchase button
-const purchaseButton = document.createElement("button");
-purchaseButton.innerHTML = "Purchase Upgrade (10 crabs)";
-purchaseButton.disabled = true;
-document.body.appendChild(purchaseButton);
+const upgrades = [
+  { name: "Worm", cost: 10, rate: 0.1, count: 0 },
+  { name: "Shrimp", cost: 100, rate: 2.0, count: 0 },
+  { name: "Fish", cost: 1000, rate: 50.0, count: 0 },
+];
 
-purchaseButton.addEventListener("click", () => {
-  if (crabCount >= 10) {
-    crabCount -= 10;
-    growthRate += 1;
-    counter.innerHTML = `${crabCount} crabs`;
-  }
+const upgradeButtons: HTMLButtonElement[] = [];
+const upgradeStatus: HTMLDivElement[] = [];
+
+// Create the purchase button
+upgrades.forEach((upgrade) => {
+  const button = document.createElement("button");
+  button.innerHTML = `Purchase ${upgrade.name} (${upgrade.cost} crabs)`;
+  button.disabled = true;
+  app.append(button);
+  upgradeButtons.push(button);
+
+  const status = document.createElement("div");
+  status.innerHTML = `${upgrade.name}: 0 purchased`;
+  app.append(status);
+  upgradeStatus.push(status);
+
+  button.addEventListener("click", () => {
+    if (crabCount >= upgrade.cost) {
+      crabCount -= upgrade.cost;
+      growthRate += upgrade.rate;
+      upgrade.count++;
+      counter.innerHTML = `${crabCount} crabs`;
+      status.innerHTML = `${upgrade.name}: ${upgrade.count} purchased`;
+      updateGrowthRateDisplay();
+    }
+  });
 });
+
+const growthRateDisplay = document.createElement("div");
+growthRateDisplay.innerHTML = `Growth rate: 0 crabs/sec`;
+app.append(growthRateDisplay);
+
+function updateGrowthRateDisplay() {
+  growthRateDisplay.innerHTML = `Growth rate: ${growthRate.toFixed(1)} crabs/sec`;
+}
 
 function updateCounter() {
   const now = performance.now();
@@ -66,8 +94,9 @@ function updateCounter() {
   }
 
   // Enable or disable the purchase button based on the crab count
-  purchaseButton.disabled = crabCount < 10;
-
+  upgrades.forEach((upgrade, index) => {
+    upgradeButtons[index].disabled = crabCount < upgrade.cost;
+  });
   requestAnimationFrame(updateCounter);
 }
 
