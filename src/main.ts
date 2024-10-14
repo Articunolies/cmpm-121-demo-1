@@ -12,7 +12,19 @@ app.append(header);
 // Add a button
 const button = document.createElement("button");
 button.innerHTML = "🦀";
+button.style.backgroundColor = "green"; // Change the color to green
+button.style.width = "150px"; // Triple the size (assuming original size was 50px)
+button.style.height = "150px"; // Triple the size (assuming original size was 50px)
+button.style.fontSize = "48px"; // Adjust font size to fit the new button size
 app.append(button);
+
+// const button = document.createElement("img");
+// button.src = "C:/Users/artic/OneDrive/Desktop/CMPM 121/cmpm-121-demo-1/img/istockphoto-1441977682-612x612.jpg"; // Replace with the path to your image
+// button.alt = "Click me";
+// button.style.cursor = "pointer"; // Make the cursor a pointer when hovering over the image
+// button.style.width = "100px"; // Set the width of the image
+// button.style.height = "100px"; // Set the height of the image
+// app.append(button);
 
 //Add a <div> element to the page that will report on the value of a counter with a message like “12 cookies”
 const counter = document.createElement("div");
