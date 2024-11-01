@@ -42,20 +42,25 @@ const availableItems: Item[] = [
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
-const gameName = "My fantastical game";
+const gameName = "Crab Fisherman Life";
 document.title = gameName;
 
 const header = document.createElement("h1");
 header.innerHTML = gameName;
 app.append(header);
 
+// Inspiration from https://egitelma.github.io/cmpm-121-demo-1/ to move the emoji to the bottom middle and make it bigger.
 // Add a button
 const button = document.createElement("button");
 button.innerHTML = "🦀";
 button.style.backgroundColor = "green"; // Change the color to green
-button.style.width = "150px"; // Triple the size (assuming original size was 50px)
-button.style.height = "150px"; // Triple the size (assuming original size was 50px)
-button.style.fontSize = "48px"; // Adjust font size to fit the new button size
+button.style.width = "300px"; // Triple the size (assuming original size was 50px)
+button.style.height = "300px"; // Triple the size (assuming original size was 50px)
+button.style.fontSize = "100px"; // Adjust font size to fit the new button size
+button.style.position = "absolute"; // Position it absolutely
+button.style.bottom = "20px"; // Move it towards the bottom
+button.style.left = "50%"; // Center it horizontally
+button.style.transform = "translateX(-50%)"; // Adjust for the button's width
 app.append(button);
 
 // Add a <div> element to the page that will report on the value of a counter with a message like “12 cookies”
@@ -77,19 +82,29 @@ let growthRate = 1;
 const upgradeButtons: HTMLButtonElement[] = [];
 const upgradeStatus: HTMLDivElement[] = [];
 
+const purchaseContainer = document.createElement("div");
+purchaseContainer.id = "purchase-container";
+app.append(purchaseContainer);
+//  Inspired from https://edmfong.github.io/cmpm-121-demo-1/ to move my puchasing options to the side of the screen
+
 availableItems.forEach((item) => {
   const button = document.createElement("button");
   button.innerHTML = `Purchase ${item.name} (${item.price.toFixed(2)} crabs)`;
   button.disabled = true;
   button.title = item.description; // Add description as a tooltip
-  app.append(button);
+  purchaseContainer.append(button); // Append to the purchase container
   upgradeButtons.push(button);
 
   const status = document.createElement("div");
   status.innerHTML = `${item.name}: 0 purchased`;
-  app.append(status);
+  purchaseContainer.append(status); // Append to the purchase container
   upgradeStatus.push(status);
 
+
+  function updateGrowthRateDisplay() {
+    growthRateDisplay.innerHTML = `Growth rate: ${growthRate.toFixed(1)} crabs/sec`;
+  }
+  
   button.addEventListener("click", () => {
     if (crabCount >= item.price) {
       crabCount -= item.price;
@@ -108,9 +123,7 @@ const growthRateDisplay = document.createElement("div");
 growthRateDisplay.innerHTML = `Growth rate: 0 crabs/sec`;
 app.append(growthRateDisplay);
 
-function updateGrowthRateDisplay() {
-  growthRateDisplay.innerHTML = `Growth rate: ${growthRate.toFixed(1)} crabs/sec`;
-}
+
 
 function updateCounter() {
   const now = performance.now();
