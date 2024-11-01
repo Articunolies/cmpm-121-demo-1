@@ -100,11 +100,10 @@ availableItems.forEach((item) => {
   purchaseContainer.append(status); // Append to the purchase container
   upgradeStatus.push(status);
 
-
   function updateGrowthRateDisplay() {
     growthRateDisplay.innerHTML = `Growth rate: ${growthRate.toFixed(1)} crabs/sec`;
   }
-  
+
   button.addEventListener("click", () => {
     if (crabCount >= item.price) {
       crabCount -= item.price;
@@ -122,8 +121,6 @@ availableItems.forEach((item) => {
 const growthRateDisplay = document.createElement("div");
 growthRateDisplay.innerHTML = `Growth rate: 0 crabs/sec`;
 app.append(growthRateDisplay);
-
-
 
 function updateCounter() {
   const now = performance.now();

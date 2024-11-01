@@ -68,7 +68,12 @@ button:focus-visible {
   top: 0;
   width: 200px; /* Adjust the width as needed */
   padding: 1rem;
-  background-color: rgba(255, 255, 255, 0.1); /* Optional: Add a background color */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.1
+  ); /* Optional: Add a background color */
 }
 
 @media (prefers-color-scheme: light) {
